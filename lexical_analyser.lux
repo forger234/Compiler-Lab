@@ -1,0 +1,42 @@
+%{
+#include <stdio.h>
+%}
+
+IDENTIFIER   [a-zA-Z_][a-zA-Z0-9_]*
+NUMBER       [0-9]+
+OPERATOR     [+\-*/=<>]
+PUNCTUATION  [;\(\){}\[\]]
+WHITESPACE   [ \t]+
+
+%%
+"int"        { printf("Keyword\t\tint\n"); }
+"float"      { printf("Keyword\t\tfloat\n"); }
+"char"       { printf("Keyword\t\tchar\n"); }
+"if"         { printf("Keyword\t\tif\n"); }
+"else"       { printf("Keyword\t\telse\n"); }
+"while"      { printf("Keyword\t\twhile\n"); }
+"for"        { printf("Keyword\t\tfor\n"); }
+"return"     { printf("Keyword\t\treturn\n"); }
+
+{IDENTIFIER}     { printf("Identifier\t%s\n", yytext); }
+{NUMBER}         { printf("Number\t\t%s\n", yytext); }
+{OPERATOR}       { printf("Operator\t%s\n", yytext); }
+{PUNCTUATION}    { printf("Punctuation\t%s\n", yytext); }
+{WHITESPACE}     ; 
+\n               { printf("\n");}
+.                { printf("Unknown\t\t%s\n", yytext); }
+%%
+
+int main(void)
+{
+    printf("Enter code:\n");
+    printf("Token Type\tLexeme\n");
+    printf("----------------\t-----------\n");
+    yylex();
+    return 0;
+}
+
+int yywrap(void)
+{
+    return 1;
+}
